@@ -4,6 +4,11 @@
 // output: ['is', 'a', 'split', 'sentence.', 'This']
 
 function rearranger(arr) {
+    output = arr
+    let first = output[0]
+    output.shift()
+    output.push(first)
+    return output
 }
 
 
@@ -16,6 +21,13 @@ function rearranger(arr) {
 // output: 42
 
 function largestNum(arr) {
+    let output = arr[0]
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] > output) {
+            output = arr[i]
+        }
+    }
+    return output
 }
 
 
@@ -28,6 +40,11 @@ function largestNum(arr) {
 // output: [16, 8, 4, 28]
 
 function elemsTimesLength(arr) {
+    output = arr
+    for (let i = 0; i < output.length; i++) {
+        output[i] *= output.length
+    }
+    return output
 }
 
 
@@ -41,8 +58,39 @@ function elemsTimesLength(arr) {
 // Primitive data types - https://developer.mozilla.org/en-US/docs/Glossary/Primitive
 
 function arrayFlattener(arr) {
-
+    let output = []
+    for (let i = 0; i < arr.length; i++) {
+        if (Array.isArray(arr[i])) {
+            for (let j = 0; j < arr[i].length; j++) {
+                if (Array.isArray(arr[i][j])) {
+                    for (let k = 0; k < arr[i][j].length; k++) {
+                        if (Array.isArray(arr[i][j][k])) {
+                            for (let m = 0; m < arr[i][j][k].length; m++) {
+                                if (typeof arr[i][j][k][m] !== 'object') {
+                                    output.push(arr[i][j][k][m])
+                                }
+                            }
+                        } else {
+                            if (typeof arr[i][j][k] !== 'object') {
+                                output.push(arr[i][j][k])
+                            }
+                        }
+                    }
+                } else {
+                    if (typeof arr[i][j] !== 'object') {
+                        output.push(arr[i][j])
+                    }
+                }
+            }
+        } else {
+            if (typeof arr[i] !== 'object') {
+                output.push(arr[i])
+            }
+        }
+    }
+    return output
 }
+
 
 
 // ------------------------------------------
@@ -75,8 +123,22 @@ let flights = [{
 
 
 function flightCost(destination, firstClass) {
-    //***hint: use the find method***
-
+    let output = 0
+    let place = destination.toUpperCase()
+    if (firstClass) {
+        for (let i = 0; i < flights.length; i++) {
+            if (flights[i].to === place) {
+                output = flights[i].prices.firstClass
+            }
+        }
+    } else {
+        for (let i = 0; i < flights.length; i++) {
+            if (flights[i].to === place) {
+                output = flights[i].prices.standard
+            }
+        }
+    }
+    return output
 }
 
 
@@ -97,7 +159,13 @@ let staff = [{ id: 1, name: 'Jon' }, { id: 2, name: 'Yuli' }, { id: 21, name: 'P
 { id: 881, name: 'Paul' }, { id: 0, name: 'Jon' }, { id: 999, name: 'Timma' }]
 
 function findById(id) {
-
+    let output = { error: "No user with that id." }
+    for (let i = 0; i < staff.length; i++) {
+        if (staff[i].id == id) {
+            return staff[i]
+        }
+    }
+    return output
 }
 
 
@@ -124,4 +192,10 @@ let theBand = {
 }
 
 function bandMemberDetails(name) {
+    for (let i = 0; i < theBand.members.length; i++) {
+        if (theBand.members[i].name == name) {
+
+            return (theBand.members[i].name + ' is in the band and plays the ' + theBand.members[i].instrument);
+        }
+    }
 }
